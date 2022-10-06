@@ -64,9 +64,7 @@ const DropdownItem: FC<IDropdownItemProps> = ({
         onClick={onClick}
         type={type}
         data-cy={
-          type === "DROPDOWN_SORT"
-            ? dataCy
-            : `modal-${typeForm}-priority-${priority}`
+          type === "DROPDOWN_SORT" ? dataCy : `modal-${typeForm}-priority-item`
         }
       >
         {type === "DROPDOWN_PRIORITY" ? (

@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import { ReactComponent as IconTrash } from "src/asset/svg/tabler_trash.svg";
 import { ReactComponent as IconEdit } from "src/asset/svg/todo-title-edit-button.svg";
+import { Backdrop } from "src/components/Alert/Backdrop";
 import ConfirmationAlert from "src/components/Alert/ConfirmationAlert";
 import Form from "src/components/Form/Form";
 import Priority from "src/data/Priority";
@@ -144,11 +145,14 @@ const Item: FC<TypeItemProps> = ({
         />
       )}
       {modalConfirmation && (
-        <ConfirmationAlert
-          title={title}
-          setModal={onClickModalConfirmation}
-          onDelete={deleteActivityItem}
-        />
+        <>
+          <Backdrop setModal={onClickModalConfirmation} />
+          <ConfirmationAlert
+            title={title}
+            setModal={onClickModalConfirmation}
+            onDelete={deleteActivityItem}
+          />
+        </>
       )}
       <ItemWrapper data-cy={`todo-item`}>
         <ItemBody>

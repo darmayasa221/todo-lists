@@ -50,6 +50,8 @@ const HeadingActivityItem = () => {
     edited: "",
     default: "",
   });
+  const [isEditTitle, setIsEditTitle] = useState<boolean>(false);
+  const [isActive, setActive] = useState<boolean | undefined>(true);
   useEffect(() => {
     const getData = async () => {
       const response = await fetch(
@@ -60,12 +62,8 @@ const HeadingActivityItem = () => {
     };
     getData();
   }, [id]);
-  const [isEditTitle, setIsEditTitle] = useState<boolean>(false);
-  const onClickEditTitle = () => {
-    isEditTitle ? setIsEditTitle(false) : setIsEditTitle(true);
-  };
   useEffect(() => {
-    if (!title.match) {
+    if (!isActive) {
       const patchTitle = async () => {
         await fetch(
           `https://todo.api.devcode.gethired.id/activity-groups/${id}`,
@@ -82,8 +80,15 @@ const HeadingActivityItem = () => {
       };
       patchTitle();
     }
-  }, [id, title]);
-
+  }, [id, isActive, title]);
+  const onClickEditTitle = () => {
+    if (isEditTitle) {
+      setIsEditTitle(false);
+    } else {
+      setIsEditTitle(true);
+      setActive(true);
+    }
+  };
   const onChangeActivityTitle = (
     event: ChangeEvent<HTMLInputElement>
   ): void => {
@@ -94,6 +99,7 @@ const HeadingActivityItem = () => {
       match,
     }));
   };
+  console.log(isActive);
   return (
     <>
       <HeadingActivityItemWrapper>
@@ -107,6 +113,14 @@ const HeadingActivityItem = () => {
             id="title"
             onChange={onChangeActivityTitle}
             data-cy="todo-title-edit-input"
+            onFocus={() => {
+              setActive(true);
+            }}
+            onBlur={() => {
+              setIsEditTitle(false);
+              setActive(false);
+            }}
+            autoFocus
           />
         ) : (
           <TitleActivityItem onClick={onClickEditTitle} data-cy="todo-title">

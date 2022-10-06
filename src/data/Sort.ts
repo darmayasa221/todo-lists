@@ -13,27 +13,27 @@ const SORT: Array<TypeSort> = [
   {
     icon: IconLatest,
     title: "Terbaru",
-    dataCy: "sort-latest",
+    dataCy: "sort-selection",
   },
   {
     icon: IconOldest,
     title: "Terlama",
-    dataCy: "sort-oldest",
+    dataCy: "sort-selection",
   },
   {
     icon: IconAz,
     title: "A-Z",
-    dataCy: "sort-az",
+    dataCy: "sort-selection",
   },
   {
     icon: IconZa,
     title: "Z-A",
-    dataCy: "sort-za",
+    dataCy: "sort-selection",
   },
   {
     icon: IconUnfinished,
     title: "Belum Selesai",
-    dataCy: "sort-unfinished",
+    dataCy: "sort-selection",
   },
 ];
 
