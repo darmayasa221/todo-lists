@@ -69,7 +69,7 @@ const ActivityItemButtons: FC<TypeActivityItemButtonsProps> = ({
       body: JSON.stringify({
         ...activity,
         activity_group_id: Number(id),
-        is_active: false,
+        is_active: true,
       }),
     });
     setClick(true);

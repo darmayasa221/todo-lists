@@ -168,9 +168,9 @@ const Form: FC<TypeFormProps> = ({
     setDropdownClick((prev) => ({ ...prev, ...value }));
     setData((prev) => ({ ...prev, priority: value.selectPriority }));
   };
-  const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit(data);
+    await onSubmit(data);
   };
   return (
     <Modal>

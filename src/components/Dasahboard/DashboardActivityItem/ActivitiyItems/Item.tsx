@@ -60,8 +60,8 @@ const ItemEditButton = styled.button({
 const ItemTitle = styled.h1<{ isActive: boolean }>(({ isActive }) => ({
   fontWeight: "500",
   fontSize: "18px",
-  color: isActive ? "#888888" : "#111111",
-  textDecoration: isActive ? "line-through" : "none",
+  color: !isActive ? "#888888" : "#111111",
+  textDecoration: !isActive ? "line-through" : "none",
 }));
 const ItemFooter = styled.div({
   display: "flex",
@@ -77,7 +77,6 @@ const ItemRemoveButton = styled.button({
     transform: "scale(1.1)",
   },
 });
-
 const Item: FC<TypeItemProps> = ({
   activityItem: { id, is_active, priority, title },
   setClick,
@@ -85,9 +84,7 @@ const Item: FC<TypeItemProps> = ({
   const itemPriority = Priority.find((item) => item.priority === priority);
   const [modalConfirmation, setModalConfirmation] = useState<boolean>(false);
   const [modalForm, setModalForm] = useState<boolean>(false);
-  const [isActive, setActive] = useState<boolean>(
-    is_active === 1 ? true : false
-  );
+  const [isActive, setActive] = useState<boolean>(Boolean(is_active));
   const [notification, setNotifiction] = useState<boolean>(false);
   const onClickModalConfirmation = () => {
     modalConfirmation
@@ -133,9 +130,9 @@ const Item: FC<TypeItemProps> = ({
     setModalForm(false);
   };
   const onChangeCheckbox = async (event: ChangeEvent<HTMLInputElement>) => {
-    const is_active: boolean | number = event.target.checked ? 1 : false;
-    await patchActiveActivityItem(is_active);
-    setActive(is_active as boolean);
+    const active: boolean = event.target.checked ? false : true;
+    await patchActiveActivityItem(active);
+    setActive(active);
   };
 
   return (
@@ -166,7 +163,7 @@ const Item: FC<TypeItemProps> = ({
           <ItemCheckbox
             data-cy="todo-item-checkbox"
             type="checkbox"
-            checked={isActive}
+            checked={isActive ? false : true}
             onChange={onChangeCheckbox}
           />
           <ItemCollor

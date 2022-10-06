@@ -48,6 +48,7 @@ const DashboardActivityItem = () => {
         `https://todo.api.devcode.gethired.id/todo-items?activity_group_id=${id}`
       );
       const responseJson: TypeResponseActivityItems = await response.json();
+      console.log(responseJson);
       const data = sorter(responseJson.data, sortFunction);
       setActivityItems(data);
     };
@@ -65,7 +66,7 @@ const DashboardActivityItem = () => {
       body: JSON.stringify({
         title: "activity",
         activity_group_id: Number(id),
-        is_active: false,
+        is_active: true,
       }),
     });
     setClick(true);
