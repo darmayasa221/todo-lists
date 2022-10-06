@@ -3,6 +3,7 @@ import React, { Dispatch, FC, SetStateAction, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as IconTrash } from "src/asset/svg/tabler_trash.svg";
 import dateFormater from "src/commons/dateFormater";
+import { Backdrop } from "src/components/Alert/Backdrop";
 import ConfirmationAlert from "src/components/Alert/ConfirmationAlert";
 import NotificationAlert from "src/components/Alert/NotificationAlert";
 import { TypeActivity } from "../DashboardActiviy";
@@ -74,14 +75,17 @@ const Activity: FC<TypeActivityProps> = ({
   return (
     <>
       {modal && (
-        <ConfirmationAlert
-          title={title}
-          setModal={onClickModal}
-          onDelete={deleteActivity}
-        />
+        <>
+          <Backdrop setModal={onClickModal} />
+          <ConfirmationAlert
+            title={title}
+            setModal={onClickModal}
+            onDelete={deleteActivity}
+          />
+        </>
       )}
       {notification && <NotificationAlert />}
-      <ActivityWrapper data-cy={`activity-item-${id || 0}`}>
+      <ActivityWrapper data-cy={`activity-item`}>
         <ActivityTitle to={`detail/${id}`} data-cy="activity-item-title">
           {title}
         </ActivityTitle>

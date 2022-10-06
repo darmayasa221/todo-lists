@@ -11,13 +11,11 @@ type TypeConfirmationAlertProps = {
 };
 const Container = styled.div({
   position: "absolute",
-  background: "rgba(33, 37, 41, 0.68)",
   width: "100%",
   height: "100vh",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  zIndex: 101,
 });
 const ConfirmationAlertWrapper = styled.div({
   display: "flex",
@@ -29,6 +27,7 @@ const ConfirmationAlertWrapper = styled.div({
   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
   borderRadius: "12px",
   padding: "43px 40px",
+  zIndex: 102,
 });
 const ConfirmationAlertHeader = styled.div({
   height: "84px",

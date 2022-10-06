@@ -150,7 +150,7 @@ const Item: FC<TypeItemProps> = ({
           onDelete={deleteActivityItem}
         />
       )}
-      <ItemWrapper data-cy={`todo-item-${id || 0}`}>
+      <ItemWrapper data-cy={`todo-item`}>
         <ItemBody>
           <ItemCheckbox
             data-cy="todo-item-checkbox"
