@@ -19,7 +19,7 @@ const sorter = (
   if (type === "Belum Selesai") {
     return value.sort((a, b) => a.is_active - b.is_active);
   }
-  return value.sort((a, b) => Number(b.id) - Number(a.id));
+  return value.sort((a, b) => Number(a.id) - Number(b.id));
 };
 
 export default sorter;
