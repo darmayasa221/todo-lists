@@ -66,9 +66,9 @@ const Activity: FC<TypeActivityProps> = ({
     await fetch(` https://todo.api.devcode.gethired.id/activity-groups/${id}`, {
       method: "DELETE",
     });
-    setNotifiction(false);
     setClick(true);
     setNotifiction(true);
+    setNotifiction(false);
   };
   return (
     <>
