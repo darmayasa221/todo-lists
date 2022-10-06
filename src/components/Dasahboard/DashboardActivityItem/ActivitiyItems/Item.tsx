@@ -10,6 +10,7 @@ import { ReactComponent as IconTrash } from "src/asset/svg/tabler_trash.svg";
 import { ReactComponent as IconEdit } from "src/asset/svg/todo-title-edit-button.svg";
 import { Backdrop } from "src/components/Alert/Backdrop";
 import ConfirmationAlert from "src/components/Alert/ConfirmationAlert";
+import NotificationAlert from "src/components/Alert/NotificationAlert";
 import Form from "src/components/Form/Form";
 import Priority from "src/data/Priority";
 import { TypeActivityItem } from "../DashboardActivityItem";
@@ -87,6 +88,7 @@ const Item: FC<TypeItemProps> = ({
   const [isActive, setActive] = useState<boolean>(
     is_active === 1 ? true : false
   );
+  const [notification, setNotifiction] = useState<boolean>(false);
   const onClickModalConfirmation = () => {
     modalConfirmation
       ? setModalConfirmation(false)
@@ -110,7 +112,11 @@ const Item: FC<TypeItemProps> = ({
     await fetch(`https://todo.api.devcode.gethired.id/todo-items/${id}`, {
       method: "DELETE",
     });
-    setClick(true);
+    setTimeout(() => {
+      setNotifiction(false);
+      setClick(true);
+    }, 200);
+    setNotifiction(true);
   };
   const editActivityItem = async (activity: {
     priority: string | undefined;
@@ -154,6 +160,7 @@ const Item: FC<TypeItemProps> = ({
           />
         </>
       )}
+      {notification && <NotificationAlert />}
       <ItemWrapper data-cy={`todo-item`}>
         <ItemBody>
           <ItemCheckbox
