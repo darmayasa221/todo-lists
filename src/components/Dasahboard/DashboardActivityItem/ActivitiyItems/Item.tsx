@@ -55,11 +55,12 @@ const ItemEditButton = styled.button({
   cursor: "pointer",
   marginLeft: "19px",
 });
-const ItemTitle = styled.h1({
+const ItemTitle = styled.h1<{ isActive: boolean }>(({ isActive }) => ({
   fontWeight: "500",
   fontSize: "18px",
-  color: "#111111",
-});
+  color: isActive ? "#888888" : "#111111",
+  textDecoration: isActive ? "line-through" : "none",
+}));
 const ItemFooter = styled.div({
   display: "flex",
   justifyContent: "space-between",
@@ -161,7 +162,9 @@ const Item: FC<TypeItemProps> = ({
             data-cy="todo-item-priority-indicator"
             color={itemPriority?.color as string}
           />
-          <ItemTitle data-cy="todo-item-title">{title}</ItemTitle>
+          <ItemTitle isActive={isActive} data-cy="todo-item-title">
+            {title}
+          </ItemTitle>
           <ItemEditButton
             data-cy="todo-item-edit-button"
             type={"button"}

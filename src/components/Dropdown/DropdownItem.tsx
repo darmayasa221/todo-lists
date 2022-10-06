@@ -11,6 +11,7 @@ export interface IDropdownItemProps
     TypePriority,
     Pick<TypeDropdownProps, "type"> {
   [key: string]: any;
+  typeForm?: string;
 }
 const DropdownItemWrapper = styled.li<Pick<IDropdownItemProps, "type">>(
   ({ type }) => ({
@@ -49,6 +50,8 @@ const DropdownItem: FC<IDropdownItemProps> = ({
   priority,
   selected,
   onChangeDropdown,
+  dataCy,
+  typeForm,
 }) => {
   const onClick = () => {
     type === "DROPDOWN_PRIORITY"
@@ -57,7 +60,15 @@ const DropdownItem: FC<IDropdownItemProps> = ({
   };
   return (
     <>
-      <DropdownItemWrapper onClick={onClick} type={type}>
+      <DropdownItemWrapper
+        onClick={onClick}
+        type={type}
+        data-cy={
+          type === "DROPDOWN_SORT"
+            ? dataCy
+            : `modal-${typeForm}-priority-${priority}`
+        }
+      >
         {type === "DROPDOWN_PRIORITY" ? (
           <>
             <DropdownBody color={color} title={title} />

@@ -104,6 +104,7 @@ const HeadingActivityItem = () => {
             value={title.edited}
             id="title"
             onChange={onChangeActivityTitle}
+            data-cy="todo-title-edit-input"
           />
         ) : (
           <TitleActivityItem data-cy="todo-title">
@@ -111,7 +112,7 @@ const HeadingActivityItem = () => {
           </TitleActivityItem>
         )}
         <ButtonActivityItem
-          data-cy="todo-edit-button"
+          data-cy="todo-title-edit-button"
           type={"button"}
           onClick={onClickEditTitle}
         >

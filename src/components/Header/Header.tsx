@@ -24,8 +24,8 @@ const HeaderHeading = styled.h1({
 });
 const Header = () => {
   return (
-    <HeaderWrapper>
-      <HeaderContainer data-cy="header-background">
+    <HeaderWrapper data-cy="header-background">
+      <HeaderContainer>
         <HeaderHeading data-cy="header-title">TO DO LIST APP</HeaderHeading>
       </HeaderContainer>
     </HeaderWrapper>

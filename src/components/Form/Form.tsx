@@ -226,6 +226,7 @@ const Form: FC<TypeFormProps> = ({
                 {isDropdownClick.visible ? <IconUp /> : <IconDown />}
                 {isDropdownClick.visible && (
                   <Dropdown
+                    typeForm={typeForm}
                     selectPriority={isDropdownClick.selectPriority}
                     selected={isDropdownClick.selected}
                     onChangeDropdown={onChangeDropdown}

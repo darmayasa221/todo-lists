@@ -15,6 +15,7 @@ export type TypeDropdownProps = {
   selectPriority?: string;
   selected?: boolean;
   title?: string;
+  typeForm?: string;
 };
 
 const DropdownContainer = styled.div<Pick<TypeDropdownProps, "type">>(
@@ -37,12 +38,14 @@ const Dropdown: FC<TypeDropdownProps> = ({
   selectPriority,
   selected,
   title,
+  typeForm,
 }) => {
   return (
     <DropdownContainer type={type}>
       <DropdownWrapper>
         {items.map((item) => (
           <DropdownItem
+            typeForm={typeForm}
             onChangeDropdown={onChangeDropdown}
             priority={item.priority as string}
             type={type}
@@ -60,6 +63,7 @@ const Dropdown: FC<TypeDropdownProps> = ({
                 : false
             }
             selectPriority={selectPriority}
+            dataCy={item.dataCy}
           />
         ))}
       </DropdownWrapper>

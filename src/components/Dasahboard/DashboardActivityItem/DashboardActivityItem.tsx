@@ -56,7 +56,20 @@ const DashboardActivityItem = () => {
       setClick(false);
     };
   }, [isClick, id, sortFunction]);
-
+  const postActivityItem = async () => {
+    await fetch("https://todo.api.devcode.gethired.id/todo-items", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: "activity",
+        activity_group_id: Number(id),
+        is_active: false,
+      }),
+    });
+    setClick(true);
+  };
   return (
     <>
       <DashboardHeaderActivityItem>
@@ -69,7 +82,10 @@ const DashboardActivityItem = () => {
         {activityItems.length > 0 ? (
           <ActivityItems setClick={setClick} activityItems={activityItems} />
         ) : (
-          <IconEmptyActivityItem data-cy="todo-empty-state" />
+          <IconEmptyActivityItem
+            onClick={postActivityItem}
+            data-cy="todo-empty-state"
+          />
         )}
       </DashboardMainActivityItem>
     </>
