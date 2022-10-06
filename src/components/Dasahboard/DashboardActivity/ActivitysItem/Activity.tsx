@@ -12,17 +12,20 @@ type TypeActivityProps = {
   activity: TypeActivity;
   setClick: Dispatch<SetStateAction<boolean>>;
 };
-const ActivityWrapper = styled.div({
+const ActivityLink = styled(Link)({
   textDecoration: "none",
+});
+const ActivityWrapper = styled.div({
+  boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.1)",
+  background: "#FFFFFF",
+  borderRadius: "12px",
+  textDecoration: "none",
+  cursor: "pointer",
   display: "flex",
   flexWrap: "wrap",
   padding: "22px 26px",
-  background: "#FFFFFF",
-  boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.1)",
-  borderRadius: "12px",
 });
-const ActivityTitle = styled(Link)({
-  cursor: "pointer",
+const ActivityTitle = styled.h1({
   fontFamily: "Poppins",
   fontWeight: "700",
   fontSize: "18px",
@@ -37,7 +40,6 @@ const ActivityFooter = styled.div({
   alignItems: "center",
 });
 const ActivityButton = styled.button({
-  zIndex: 10,
   cursor: "pointer",
   border: "none",
   background: "none",
@@ -85,10 +87,10 @@ const Activity: FC<TypeActivityProps> = ({
         </>
       )}
       {notification && <NotificationAlert />}
-      <ActivityWrapper data-cy={`activity-item`}>
-        <ActivityTitle to={`detail/${id}`} data-cy="activity-item-title">
-          {title}
-        </ActivityTitle>
+      <ActivityWrapper>
+        <ActivityLink data-cy={`activity-item`} to={`detail/${id}`}>
+          <ActivityTitle data-cy="activity-item-title">{title}</ActivityTitle>
+        </ActivityLink>
         <ActivityFooter>
           <ActivityDate data-cy="activity-item-date">
             {createdAtID}
