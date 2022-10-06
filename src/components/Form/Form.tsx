@@ -22,13 +22,11 @@ type TypeFormProps = {
 };
 const Container = styled.div({
   position: "absolute",
-  background: "rgba(33, 37, 41, 0.68)",
   width: "100%",
   height: "100vh",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  zIndex: 101,
 });
 const FormWrapper = styled.form({
   display: "flex",
