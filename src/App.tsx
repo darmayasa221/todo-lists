@@ -20,7 +20,7 @@ function App() {
           },
         })}
       />
-      <Header />
+      <Header data-cy="header" />
       <main>
         <Dashboard />
       </main>
