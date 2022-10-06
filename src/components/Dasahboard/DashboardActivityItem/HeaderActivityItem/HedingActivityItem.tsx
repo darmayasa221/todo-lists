@@ -99,7 +99,6 @@ const HeadingActivityItem = () => {
       match,
     }));
   };
-  console.log(isActive);
   return (
     <>
       <HeadingActivityItemWrapper>
