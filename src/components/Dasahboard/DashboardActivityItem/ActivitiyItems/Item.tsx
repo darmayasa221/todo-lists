@@ -135,7 +135,7 @@ const Item: FC<TypeItemProps> = ({
   const onChangeCheckbox = async (event: ChangeEvent<HTMLInputElement>) => {
     const is_active: boolean | number = event.target.checked ? 1 : false;
     await patchActiveActivityItem(is_active);
-    setActive(!isActive);
+    setActive(is_active as boolean);
   };
 
   return (

@@ -21,7 +21,7 @@ const DropdownItemWrapper = styled.li<Pick<IDropdownItemProps, "type">>(
     display: "flex",
     alignItems: "center",
     height: "52px",
-    padding: type === "DROPDOWN_PRIORITY" ? "19px 17px" : "22px 24px",
+    padding: type === "DROPDOWN_PRIORITY" ? "19px 17px" : "10px 24px",
     justifyContent: "space-between",
     border: "1px solid #E5E5E5",
   })
