@@ -1,25 +1,66 @@
 import styled from "@emotion/styled";
-import React from "react";
-import SORT from "src/data/Sort";
+import React, { FC } from "react";
+import { TypePriority } from "src/data/Priority";
+import { TypeSort } from "src/data/Sort";
 import DropdownItem from "./DropdownItem";
 
-const DropdownContainer = styled.div({
-  background: "white",
-  position: "absolute",
-  width: "235px",
-  height: "260px",
-  border: "1px solid #E5E5E5",
-  borderRadius: "6px",
-  left: 18,
-  top: 60,
-});
+export type TypeDropdownProps = {
+  items: Array<TypeSort | TypePriority>;
+  type: "DROPDOWN_PRIORITY" | "DROPDOWN_SORT";
+  onChangeDropdown?: (value: {
+    selectPriority?: string;
+    color?: string;
+    title: string;
+  }) => void;
+  selectPriority?: string;
+  selected?: boolean;
+  title?: string;
+};
+
+const DropdownContainer = styled.div<Pick<TypeDropdownProps, "type">>(
+  ({ type }) => ({
+    background: "#FFFFFF",
+    position: "absolute",
+    width: type === "DROPDOWN_PRIORITY" ? "205px" : "235px",
+    height: type === "DROPDOWN_PRIORITY" ? "none" : "260px",
+    border: "1px solid #E5E5E5",
+    borderRadius: "6px",
+    left: type === "DROPDOWN_PRIORITY" ? -1 : 18,
+    top: type === "DROPDOWN_PRIORITY" ? 45 : 60,
+  })
+);
 const DropdownWrapper = styled.ul({});
-const Dropdown = () => {
+const Dropdown: FC<TypeDropdownProps> = ({
+  items,
+  type,
+  onChangeDropdown,
+  selectPriority,
+  selected,
+  title,
+}) => {
   return (
-    <DropdownContainer>
+    <DropdownContainer type={type}>
       <DropdownWrapper>
-        {SORT.map((item) => (
-          <DropdownItem key={item.title} title={item.title} icon={item.icon} />
+        {items.map((item) => (
+          <DropdownItem
+            onChangeDropdown={onChangeDropdown}
+            priority={item.priority as string}
+            type={type}
+            key={item.title}
+            title={item.title}
+            icon={item.icon as string}
+            color={item.color as string}
+            selected={
+              type === "DROPDOWN_PRIORITY"
+                ? selectPriority === item.priority
+                  ? selected
+                  : false
+                : item.title === title
+                ? selected
+                : false
+            }
+            selectPriority={selectPriority}
+          />
         ))}
       </DropdownWrapper>
     </DropdownContainer>

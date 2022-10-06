@@ -7,27 +7,33 @@ export type TypeSort = {
   [key: string]: string | undefined;
   icon?: string;
   title: string;
+  dataCy?: string;
 };
 const SORT: Array<TypeSort> = [
   {
     icon: IconLatest,
     title: "Terbaru",
+    dataCy: "sort-latest",
   },
   {
     icon: IconOldest,
     title: "Terlama",
+    dataCy: "sort-oldest",
   },
   {
     icon: IconAz,
     title: "A-Z",
+    dataCy: "sort-az",
   },
   {
     icon: IconZa,
     title: "Z-A",
+    dataCy: "sort-za",
   },
   {
     icon: IconUnfinished,
     title: "Belum Selesai",
+    dataCy: "sort-unfinished",
   },
 ];
 

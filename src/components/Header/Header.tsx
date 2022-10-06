@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 
 const HeaderWrapper = styled.header({
-  zIndex: "100",
+  zIndex: 10,
   position: "fixed",
   display: "flex",
   justifyContent: "center",
@@ -16,8 +16,9 @@ const HeaderContainer = styled.div({
   width: "1000px",
 });
 const HeaderHeading = styled.h1({
+  fontFamily: "Poppins",
   fontSize: "24px",
-  color: "white",
+  color: "#FFFFFF",
   fontWeight: "700",
   textTransform: "uppercase",
 });

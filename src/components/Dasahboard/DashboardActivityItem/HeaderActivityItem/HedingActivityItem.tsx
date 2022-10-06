@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-import React, { useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { ReactComponent as IconBack } from "src/asset/svg/todo-back-button.svg";
 import { ReactComponent as IconEdit } from "src/asset/svg/todo-title-edit-button.svg";
 
@@ -14,7 +15,15 @@ const ButtonActivityItem = styled.button({
   background: "none",
   border: "none",
 });
+const LinkActivityItem = styled(Link)({
+  display: "flex",
+  alignItems: "center",
+  cursor: "pointer",
+  background: "none",
+  border: "none",
+});
 const TitleActivityItem = styled.h1({
+  fontWeight: "700",
   fontSize: "36px",
   color: "#111111",
   padding: "0 23px",
@@ -30,24 +39,82 @@ const InputTitleActivityItem = styled.input({
   },
 });
 const HeadingActivityItem = () => {
+  const { id } = useParams();
+  const [title, setTitle] = useState<{
+    edited: string;
+    default: string;
+    match: boolean;
+  }>({
+    match: true,
+    edited: "",
+    default: "",
+  });
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch(
+        `https://todo.api.devcode.gethired.id/activity-groups/${id}`
+      );
+      const { title }: { title: string } = await response.json();
+      setTitle((prev) => ({ ...prev, default: title, edited: title }));
+    };
+    getData();
+  }, [id]);
   const [isEditTitle, setIsEditTitle] = useState<boolean>(false);
+  useEffect(() => {
+    if (!title.match) {
+      const patchTitle = async () => {
+        await fetch(
+          `https://todo.api.devcode.gethired.id/activity-groups/${id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: title.edited,
+            }),
+          }
+        );
+      };
+      patchTitle();
+    }
+  }, [id, title]);
   const onClickEditTitle = () => {
     isEditTitle ? setIsEditTitle(false) : setIsEditTitle(true);
+  };
+  const onChangeActivityTitle = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    const match = event.target.value === title.default;
+    setTitle((prev) => ({
+      ...prev,
+      edited: event.target.value,
+      match,
+    }));
   };
   return (
     <>
       <HeadingActivityItemWrapper>
-        <ButtonActivityItem>
+        <LinkActivityItem data-cy="todo-back-button" to={"/"}>
           <IconBack />
-        </ButtonActivityItem>
+        </LinkActivityItem>
         {isEditTitle ? (
-          <InputTitleActivityItem />
+          <InputTitleActivityItem
+            type={"text"}
+            value={title.edited}
+            id="title"
+            onChange={onChangeActivityTitle}
+          />
         ) : (
-          <TitleActivityItem data-cy="activity-title">
-            Activity
+          <TitleActivityItem data-cy="todo-title">
+            {title.edited}
           </TitleActivityItem>
         )}
-        <ButtonActivityItem type={"button"} onClick={onClickEditTitle}>
+        <ButtonActivityItem
+          data-cy="todo-edit-button"
+          type={"button"}
+          onClick={onClickEditTitle}
+        >
           <IconEdit />
         </ButtonActivityItem>
       </HeadingActivityItemWrapper>

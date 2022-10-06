@@ -1,18 +1,32 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { Dispatch, FC, SetStateAction, useState } from "react";
+import { Link } from "react-router-dom";
 import { ReactComponent as IconTrash } from "src/asset/svg/tabler_trash.svg";
+import dateFormater from "src/commons/dateFormater";
+import ConfirmationAlert from "src/components/Alert/ConfirmationAlert";
+import NotificationAlert from "src/components/Alert/NotificationAlert";
+import { TypeActivity } from "../DashboardActiviy";
+
+type TypeActivityProps = {
+  activity: TypeActivity;
+  setClick: Dispatch<SetStateAction<boolean>>;
+};
 const ActivityWrapper = styled.div({
+  textDecoration: "none",
   display: "flex",
   flexWrap: "wrap",
-  cursor: "pointer",
   padding: "22px 26px",
   background: "#FFFFFF",
   boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.1)",
   borderRadius: "12px",
 });
-const ActivityTitle = styled.h1({
+const ActivityTitle = styled(Link)({
+  cursor: "pointer",
+  fontFamily: "Poppins",
+  fontWeight: "700",
   fontSize: "18px",
   color: "#111111",
+  textDecoration: "none",
 });
 const ActivityFooter = styled.div({
   width: "100%",
@@ -22,6 +36,7 @@ const ActivityFooter = styled.div({
   alignItems: "center",
 });
 const ActivityButton = styled.button({
+  zIndex: 10,
   cursor: "pointer",
   border: "none",
   background: "none",
@@ -31,23 +46,59 @@ const ActivityButton = styled.button({
   },
 });
 const ActivityDate = styled.p({
+  fontFamily: "Poppins",
   fontSize: "14px",
   color: "#888888",
   fontWeight: "500",
 });
-const Activity = () => {
+const Activity: FC<TypeActivityProps> = ({
+  activity: { created_at, id, title },
+  setClick,
+}) => {
+  const createdAtID = dateFormater(created_at);
+  const [modal, setModal] = useState<boolean>(false);
+  const [notification, setNotifiction] = useState<boolean>(false);
+  const onClickModal = () => {
+    modal ? setModal(false) : setModal(true);
+  };
+  const deleteActivity = async () => {
+    await fetch(` https://todo.api.devcode.gethired.id/activity-groups/${id}`, {
+      method: "DELETE",
+    });
+    setTimeout(() => {
+      setNotifiction(false);
+      setClick(true);
+    }, 1000);
+    setNotifiction(true);
+  };
   return (
-    <ActivityWrapper data-cy="activity-card">
-      <ActivityTitle data-cy="activity-item-title">Activity</ActivityTitle>
-      <ActivityFooter>
-        <ActivityDate data-cy="activity-item-date">
-          40 oktober 2020
-        </ActivityDate>
-        <ActivityButton data-cy="activity-item-delete-button">
-          <IconTrash />
-        </ActivityButton>
-      </ActivityFooter>
-    </ActivityWrapper>
+    <>
+      {modal && (
+        <ConfirmationAlert
+          title={title}
+          setModal={onClickModal}
+          onDelete={deleteActivity}
+        />
+      )}
+      {notification && <NotificationAlert />}
+      <ActivityWrapper data-cy={`activity-item-${id || 0}`}>
+        <ActivityTitle to={`detail/${id}`} data-cy="activity-item-title">
+          {title}
+        </ActivityTitle>
+        <ActivityFooter>
+          <ActivityDate data-cy="activity-item-date">
+            {createdAtID}
+          </ActivityDate>
+          <ActivityButton
+            onClick={onClickModal}
+            type={"button"}
+            data-cy="activity-item-delete-button"
+          >
+            <IconTrash />
+          </ActivityButton>
+        </ActivityFooter>
+      </ActivityWrapper>
+    </>
   );
 };
 

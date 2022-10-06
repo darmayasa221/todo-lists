@@ -13,7 +13,7 @@ const routes = createBrowserRouter([
         element: <DashboardActivity />,
       },
       {
-        path: "/detail",
+        path: "/detail/:id",
         element: <DashboardActivityItem />,
       },
     ],

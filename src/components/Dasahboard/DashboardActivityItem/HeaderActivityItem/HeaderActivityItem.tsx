@@ -1,12 +1,23 @@
-import React from "react";
+import React, { Dispatch, FC, SetStateAction } from "react";
 import ActivityItemButtons from "./ActivityItemButtons";
 import HeadingActivityItem from "./HedingActivityItem";
 
-const HeaderActivityItem = () => {
+type HeaderActivityItemProps = {
+  setClick: Dispatch<SetStateAction<boolean>>;
+  setSortFunction: Dispatch<SetStateAction<string>>;
+};
+
+const HeaderActivityItem: FC<HeaderActivityItemProps> = ({
+  setClick,
+  setSortFunction,
+}) => {
   return (
     <>
       <HeadingActivityItem />
-      <ActivityItemButtons />
+      <ActivityItemButtons
+        setClick={setClick}
+        setSortFunction={setSortFunction}
+      />
     </>
   );
 };
