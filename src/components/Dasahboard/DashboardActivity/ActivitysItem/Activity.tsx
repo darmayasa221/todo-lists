@@ -69,7 +69,7 @@ const Activity: FC<TypeActivityProps> = ({
     setTimeout(() => {
       setNotifiction(false);
       setClick(true);
-    });
+    }, 200);
     setNotifiction(true);
   };
   return (
