@@ -23,6 +23,7 @@ const LinkActivityItem = styled(Link)({
   border: "none",
 });
 const TitleActivityItem = styled.h1({
+  cursor: "pointer",
   fontWeight: "700",
   fontSize: "36px",
   color: "#111111",
@@ -60,6 +61,9 @@ const HeadingActivityItem = () => {
     getData();
   }, [id]);
   const [isEditTitle, setIsEditTitle] = useState<boolean>(false);
+  const onClickEditTitle = () => {
+    isEditTitle ? setIsEditTitle(false) : setIsEditTitle(true);
+  };
   useEffect(() => {
     if (!title.match) {
       const patchTitle = async () => {
@@ -79,9 +83,7 @@ const HeadingActivityItem = () => {
       patchTitle();
     }
   }, [id, title]);
-  const onClickEditTitle = () => {
-    isEditTitle ? setIsEditTitle(false) : setIsEditTitle(true);
-  };
+
   const onChangeActivityTitle = (
     event: ChangeEvent<HTMLInputElement>
   ): void => {
@@ -107,7 +109,7 @@ const HeadingActivityItem = () => {
             data-cy="todo-title-edit-input"
           />
         ) : (
-          <TitleActivityItem data-cy="todo-title">
+          <TitleActivityItem onClick={onClickEditTitle} data-cy="todo-title">
             {title.edited}
           </TitleActivityItem>
         )}
