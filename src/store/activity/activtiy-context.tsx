@@ -1,12 +1,9 @@
-import React, {
-  Dispatch,
-  FC,
-  ReactNode,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
-import { TypeActivitys, TypeResponseActivitys } from "src/types/TypeActivity";
+import React, { FC, ReactNode, useEffect, useState } from "react";
+import {
+  TypeActivitys,
+  TypeDeleteActivity,
+  TypeResponseActivitys,
+} from "src/types/TypeActivity";
 import ActivityContext from ".";
 
 const ActivityContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
@@ -39,18 +36,19 @@ const ActivityContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     });
     setPostActivity(true);
   };
-  const deleteActivity = async (
+  const deleteActivity: TypeDeleteActivity = async (
     id: number,
-    setNotification: Dispatch<SetStateAction<boolean>>
+    setNotificationOn: () => void,
+    setNotificationOff: () => void
   ): Promise<void> => {
     await fetch(` https://todo.api.devcode.gethired.id/activity-groups/${id}`, {
       method: "DELETE",
     });
     setTimeout(() => {
-      setNotification(false);
+      setNotificationOff();
       setDeleteActivity(true);
     }, 200);
-    setNotification(true);
+    setNotificationOn();
   };
   return (
     <ActivityContext.Provider

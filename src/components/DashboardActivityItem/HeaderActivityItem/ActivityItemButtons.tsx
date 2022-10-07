@@ -3,7 +3,7 @@ import React, { Dispatch, FC, SetStateAction, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ReactComponent as IconAdd } from "src/asset/svg/tabler_plus.svg";
 import { ReactComponent as IconSort } from "src/asset/svg/todo-sort-button.svg";
-import { Backdrop } from "src/components/Alert/Backdrop";
+import { Backdrop } from "src/components/Modal/Alert/Backdrop";
 import Dropdown from "src/components/Dropdown/Dropdown";
 import Form from "src/components/Form/Form";
 import { button } from "src/components/GlobalStyle/button";

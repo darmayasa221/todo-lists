@@ -1,13 +1,10 @@
-import { createContext, Dispatch, SetStateAction } from "react";
-import { TypeActivitys } from "src/types/TypeActivity";
+import { createContext } from "react";
+import { TypeActivitys, TypeDeleteActivity } from "src/types/TypeActivity";
 
 type TypeActivityContext = {
   activitys: TypeActivitys;
   postActivity: () => Promise<void>;
-  deleteActivity: (
-    id: number,
-    setNotification: Dispatch<SetStateAction<boolean>>
-  ) => Promise<void>;
+  deleteActivity: TypeDeleteActivity;
 };
 
 const ActivityContext = createContext<TypeActivityContext>(

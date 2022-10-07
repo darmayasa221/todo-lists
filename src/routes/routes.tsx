@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "src/App";
-import DashboardActivity from "src/components/Dasahboard/DashboardActivity/DashboardActiviy";
-import DashboardActivityItem from "src/components/Dasahboard/DashboardActivityItem/DashboardActivityItem";
+import Activity from "src/pages/Activity";
 
 const routes = createBrowserRouter([
   {
@@ -10,12 +9,12 @@ const routes = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <DashboardActivity />,
+        element: <Activity />,
       },
-      {
-        path: "/detail/:id",
-        element: <DashboardActivityItem />,
-      },
+      // {
+      //   path: "/detail/:id",
+      //   element: <DashboardActivityItem />,
+      // },
     ],
   },
 ]);

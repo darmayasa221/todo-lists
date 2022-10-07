@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React, { FC } from "react";
-import ModalBackdrop from "../Modal/ModalBackdrop";
+import ModalBackdrop from "../ModalBackdrop";
 
 type TypeBackdropProps = {
   setModal: () => void;

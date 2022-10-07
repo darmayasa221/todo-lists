@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 import React, { FC } from "react";
-import { button } from "../GlobalStyle/button";
+import { button } from "../../GlobalStyle/button";
 import { ReactComponent as IconAlertDelete } from "src/asset/svg/modal-delete-icon.svg";
-import Modal from "../Modal/Modal";
+import Modal from "../Modal";
 
 type TypeConfirmationAlertProps = {
   setModal: () => void;
   onDelete: () => Promise<void>;
   title: string;
 };
+// type TypeConfirmationAlert = FC<<T>
 const Container = styled.div({
   position: "absolute",
   width: "100%",

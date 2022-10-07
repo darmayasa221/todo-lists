@@ -11,3 +11,8 @@ export type TypeResponseActivitys = {
   skip: number;
   data: TypeActivitys;
 };
+export type TypeDeleteActivity = (
+  id: number,
+  setNotificationOn: () => void,
+  setNotificationOff: () => void
+) => Promise<void>;

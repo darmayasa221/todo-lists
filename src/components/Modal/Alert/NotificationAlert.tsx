@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import Modal from "../Modal/Modal";
+import Modal from "../Modal";
 import { ReactComponent as IconNotification } from "src/asset/svg/modal-information-icon.svg";
 const Container = styled.div({
   position: "absolute",

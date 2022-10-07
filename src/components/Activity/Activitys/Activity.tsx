@@ -1,16 +1,17 @@
 import styled from "@emotion/styled";
-import React, { Dispatch, FC, SetStateAction, useState } from "react";
+import React, { FC, useContext } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as IconTrash } from "src/asset/svg/tabler_trash.svg";
 import dateFormater from "src/commons/dateFormater";
-import { Backdrop } from "src/components/Alert/Backdrop";
-import ConfirmationAlert from "src/components/Alert/ConfirmationAlert";
-import NotificationAlert from "src/components/Alert/NotificationAlert";
-import { TypeActivity } from "../DashboardActiviy";
+import { Backdrop } from "src/components/Modal/Alert/Backdrop";
+import ConfirmationAlert from "src/components/Modal/Alert/ConfirmationAlert";
+import NotificationAlert from "src/components/Modal/Alert/NotificationAlert";
+import ActivityContext from "src/store/activity";
+import UiContext from "src/store/ui";
+import { TypeActivity } from "src/types/TypeActivity";
 
 type TypeActivityProps = {
   activity: TypeActivity;
-  setClick: Dispatch<SetStateAction<boolean>>;
 };
 const ActivityLink = styled(Link)({
   textDecoration: "none",
@@ -56,37 +57,33 @@ const ActivityDate = styled.p({
 });
 const Activity: FC<TypeActivityProps> = ({
   activity: { created_at, id, title },
-  setClick,
 }) => {
   const createdAtID = dateFormater(created_at);
-  const [modal, setModal] = useState<boolean>(false);
-  const [notification, setNotifiction] = useState<boolean>(false);
-  const onClickModal = () => {
-    modal ? setModal(false) : setModal(true);
-  };
-  const deleteActivity = async () => {
-    await fetch(` https://todo.api.devcode.gethired.id/activity-groups/${id}`, {
-      method: "DELETE",
-    });
-    setTimeout(() => {
-      setNotifiction(false);
-      setClick(true);
-    }, 200);
-    setNotifiction(true);
+  const { deleteActivity } = useContext(ActivityContext);
+  const {
+    isModalOn,
+    isNotificationOn,
+    setModalOff,
+    setModalOn,
+    setNotificationOff,
+    setNotificationOn,
+  } = useContext(UiContext);
+  const onDelete = async () => {
+    await deleteActivity(id, setNotificationOn, setNotificationOff);
   };
   return (
     <>
-      {modal && (
+      {isModalOn && (
         <>
-          <Backdrop setModal={onClickModal} />
+          <Backdrop setModal={setModalOff} />
           <ConfirmationAlert
             title={title}
-            setModal={onClickModal}
-            onDelete={deleteActivity}
+            setModal={setModalOff}
+            onDelete={onDelete}
           />
         </>
       )}
-      {notification && <NotificationAlert />}
+      {isNotificationOn && <NotificationAlert />}
       <ActivityWrapper>
         <ActivityLink data-cy={`activity-item`} to={`detail/${id}`}>
           <ActivityTitle data-cy="activity-item-title">{title}</ActivityTitle>
@@ -96,7 +93,7 @@ const Activity: FC<TypeActivityProps> = ({
             {createdAtID}
           </ActivityDate>
           <ActivityButton
-            onClick={onClickModal}
+            onClick={setModalOn}
             type={"button"}
             data-cy="activity-item-delete-button"
           >
