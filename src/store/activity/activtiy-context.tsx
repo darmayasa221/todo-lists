@@ -9,9 +9,7 @@ import React, {
 import { TypeActivitys, TypeResponseActivitys } from "src/types/TypeActivity";
 import ActivityContext from ".";
 
-export const ActivityContexProvider: FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+const ActivityContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [activitys, setActivitys] = useState<TypeActivitys>([]);
   const [isPostActivity, setPostActivity] = useState<boolean>(false);
   const [isDeleteActivity, setDeleteActivity] = useState<boolean>(false);
@@ -66,3 +64,5 @@ export const ActivityContexProvider: FC<{ children: ReactNode }> = ({
     </ActivityContext.Provider>
   );
 };
+
+export default ActivityContextProvider;
