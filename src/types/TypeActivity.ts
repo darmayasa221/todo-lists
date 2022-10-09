@@ -16,3 +16,9 @@ export type TypeDeleteActivity = (
   setNotificationOn: () => void,
   setNotificationOff: () => void
 ) => Promise<void>;
+export type TypePatchTitleActivityById = (
+  title: string,
+  id: number
+) => Promise<void>;
+
+export type TypeGetActivityById = (id: number) => Promise<void>;

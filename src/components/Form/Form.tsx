@@ -1,5 +1,12 @@
 import styled from "@emotion/styled";
-import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { button } from "../GlobalStyle/button";
 import { ReactComponent as IconClose } from "src/asset/svg/modal-add-close-button.svg";
 import { ReactComponent as IconUp } from "src/asset/svg/tabler_chevron-up.svg";
@@ -8,17 +15,14 @@ import Priority from "src/data/Priority";
 import Dropdown from "../Dropdown/Dropdown";
 import Modal from "../Modal/Modal";
 import DropdownBody from "../Dropdown/DropdownBody";
+import UiModalContext from "src/store/ui/modal";
 
 type TypeFormProps = {
-  onSubmit: (activity: {
-    priority: string | undefined;
-    title: string;
-  }) => Promise<void>;
-  setModal: () => void;
-  titleForm: string;
+  onSubmit: () => Promise<void>;
+  onChangeInputTitle: (value: string) => void;
+  onChangeDropdown: (value: string) => void;
   typeForm: "add" | "edit";
-  titileActivityItem?: string;
-  priority?: string;
+  titleForm: string;
 };
 const Container = styled.div({
   position: "absolute",
@@ -120,57 +124,56 @@ const FormSaveButton = styled(button)({
 });
 const Form: FC<TypeFormProps> = ({
   onSubmit,
-  setModal,
   titleForm,
-  priority,
-  titileActivityItem,
   typeForm,
+  onChangeInputTitle,
 }) => {
-  const [data, setData] = useState<{
-    priority: string | undefined;
-    title: string;
-  }>({
-    priority: priority || undefined,
-    title: titileActivityItem || "",
-  });
-  const [isDisabled, setDisabled] = useState<boolean>(true);
-  const itemPriority = Priority.find((item) => item.priority === priority);
-  const [isDropdownClick, setDropdownClick] = useState<{
-    visible: boolean;
-    selectPriority: string;
-    selected: boolean;
-    color?: string;
-    title: string;
-  }>({
-    visible: false,
-    selectPriority: priority || "very-high",
-    color: priority === undefined ? "#ED4C5C" : itemPriority?.color,
-    selected: true,
-    title:
-      priority === undefined ? "Very High" : (itemPriority?.title as string),
-  });
-  useEffect(() => {
-    data.title.trim().length <= 0 ? setDisabled(true) : setDisabled(false);
-  }, [data.title]);
+  const { setModalOff, setModalOn } = useContext(UiModalContext);
+  // const [data, setData] = useState<{
+  //   priority: string | undefined;
+  //   title: string;
+  // }>({
+  //   priority: priority || undefined,
+  //   title: titileActivityItem || "",
+  // });
+  // const [isDisabled, setDisabled] = useState<boolean>(true);
+  // const itemPriority = Priority.find((item) => item.priority === priority);
+  // const [isDropdownClick, setDropdownClick] = useState<{
+  //   visible: boolean;
+  //   selectPriority: string;
+  //   selected: boolean;
+  //   color?: string;
+  //   title: string;
+  // }>({
+  //   visible: false,
+  //   selectPriority: priority || "very-high",
+  //   color: priority === undefined ? "#ED4C5C" : itemPriority?.color,
+  //   selected: true,
+  //   title:
+  //     priority === undefined ? "Very High" : (itemPriority?.title as string),
+  // });
+  // useEffect(() => {
+  //   data.title.trim().length <= 0 ? setDisabled(true) : setDisabled(false);
+  // }, [data.title]);
   const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setData((prev) => ({ ...prev, title: event.target.value }));
+    onChangeInputTitle(event.target.value);
   };
-  const onClickDropdown = () => {
-    isDropdownClick.visible
-      ? setDropdownClick((prev) => ({ ...prev, visible: false }))
-      : setDropdownClick((prev) => ({ ...prev, visible: true }));
-  };
-  const onChangeDropdown = (value: {
-    selectPriority?: string;
-    color?: string;
-    title: string;
-  }) => {
-    setDropdownClick((prev) => ({ ...prev, ...value }));
-    setData((prev) => ({ ...prev, priority: value.selectPriority }));
-  };
+  // const onClickDropdown = () => {
+  //   isDropdownClick.visible
+  //     ? setDropdownClick((prev) => ({ ...prev, visible: false }))
+  //     : setDropdownClick((prev) => ({ ...prev, visible: true }));
+  // };
+  // const onChangeDropdown = (value: {
+  //   selectPriority?: string;
+  //   color?: string;
+  //   title: string;
+  // }) => {
+  //   setDropdownClick((prev) => ({ ...prev, ...value }));
+  //   setData((prev) => ({ ...prev, priority: value.selectPriority }));
+  // };
   const onSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await onSubmit(data);
+    await onSubmit();
   };
   return (
     <Modal>
@@ -182,7 +185,7 @@ const Form: FC<TypeFormProps> = ({
             </FormHeading>
             <FormCloseButton
               data-cy={`modal-${typeForm}-close-button`}
-              onClick={setModal}
+              onClick={setModalOff}
               type={"button"}
             >
               <IconClose />

@@ -13,7 +13,7 @@ import ConfirmationAlert from "src/components/Modal/Alert/ConfirmationAlert";
 import NotificationAlert from "src/components/Modal/Alert/NotificationAlert";
 import Form from "src/components/Form/Form";
 import Priority from "src/data/Priority";
-import { TypeActivityItem } from "../DashboardActivityItem";
+import { TypeActivityItem } from "../../../pages/ActivityTodo";
 
 type TypeItemProps = {
   activityItem: TypeActivityItem;

@@ -1,10 +1,19 @@
 import { createContext } from "react";
-import { TypeActivitys, TypeDeleteActivity } from "src/types/TypeActivity";
+import {
+  TypeActivity,
+  TypeActivitys,
+  TypeDeleteActivity,
+  TypeGetActivityById,
+  TypePatchTitleActivityById,
+} from "src/types/TypeActivity";
 
 type TypeActivityContext = {
+  activity: TypeActivity;
   activitys: TypeActivitys;
   postActivity: () => Promise<void>;
   deleteActivity: TypeDeleteActivity;
+  getActivityById: TypeGetActivityById;
+  patchTitleActivityById: TypePatchTitleActivityById;
 };
 
 const ActivityContext = createContext<TypeActivityContext>(

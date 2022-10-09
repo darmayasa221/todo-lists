@@ -7,8 +7,8 @@ import { Backdrop } from "src/components/Modal/Alert/Backdrop";
 import ConfirmationAlert from "src/components/Modal/Alert/ConfirmationAlert";
 import NotificationAlert from "src/components/Modal/Alert/NotificationAlert";
 import ActivityContext from "src/store/activity";
-import UiContext from "src/store/ui";
 import { TypeActivity } from "src/types/TypeActivity";
+import UiModalContext from "src/store/ui/modal";
 
 type TypeActivityProps = {
   activity: TypeActivity;
@@ -67,7 +67,7 @@ const Activity: FC<TypeActivityProps> = ({
     setModalOn,
     setNotificationOff,
     setNotificationOn,
-  } = useContext(UiContext);
+  } = useContext(UiModalContext);
   const onDelete = async () => {
     await deleteActivity(id, setNotificationOn, setNotificationOff);
   };
@@ -85,7 +85,11 @@ const Activity: FC<TypeActivityProps> = ({
       )}
       {isNotificationOn && <NotificationAlert />}
       <ActivityWrapper>
-        <ActivityLink data-cy={`activity-item`} to={`detail/${id}`}>
+        <ActivityLink
+          data-cy={`activity-item`}
+          to={`detail/${id}`}
+          state={title}
+        >
           <ActivityTitle data-cy="activity-item-title">{title}</ActivityTitle>
         </ActivityLink>
         <ActivityFooter>

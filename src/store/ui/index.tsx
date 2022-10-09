@@ -1,13 +1,13 @@
-import { createContext } from "react";
-type TypeUiContext = {
-  isModalOn: boolean;
-  isNotificationOn: boolean;
-  setModalOn: () => void;
-  setModalOff: () => void;
-  setNotificationOn: () => void;
-  setNotificationOff: () => void;
+import { FC, ReactNode } from "react";
+import UiDropdownContextProvider from "./form/dorpdown/ui-dropdown-context";
+import UiModalContextProvider from "./modal/ui-modal-context";
+
+const UiContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  return (
+    <UiModalContextProvider>
+      <UiDropdownContextProvider>{children}</UiDropdownContextProvider>
+    </UiModalContextProvider>
+  );
 };
 
-const UiContext = createContext<TypeUiContext>({} as TypeUiContext);
-
-export default UiContext;
+export default UiContextProvider;

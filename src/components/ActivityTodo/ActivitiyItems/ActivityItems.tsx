@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
-import React, { Dispatch, FC, SetStateAction } from "react";
-import { TypeActivityItem } from "../DashboardActivityItem";
+import React, { FC } from "react";
+import { TypeActivityTodos } from "src/types/TypeActivityTodo";
 import Item from "./Item";
 
 type TypeActiviteItemsProps = {
-  activityItems: Array<TypeActivityItem>;
-  setClick: Dispatch<SetStateAction<boolean>>;
+  activityTodos: TypeActivityTodos;
 };
 
 const ActivityItemsContainer = styled.div({
@@ -14,13 +13,10 @@ const ActivityItemsContainer = styled.div({
   width: "100%",
   rowGap: "10px",
 });
-const ActivityItems: FC<TypeActiviteItemsProps> = ({
-  activityItems,
-  setClick,
-}) => {
+const ActivityItems: FC<TypeActiviteItemsProps> = ({ activityTodos }) => {
   return (
     <ActivityItemsContainer>
-      {activityItems.map((activityItem) => (
+      {activityTodos.map((activityTodo) => (
         <Item
           setClick={setClick}
           key={activityItem.id}

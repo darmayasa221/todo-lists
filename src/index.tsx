@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import routes from "./routes/routes";
-import ActivityContextProvider from "./store/activity/activtiy-context";
-import UiContextProvider from "./store/ui/ui-context";
+import ActivityContextProvider from "./store/activity/activity-context";
+import UiContextProvider from "./store/ui";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
